@@ -41,7 +41,16 @@ public:
 };
 
 Fraction reduce(Fraction input) {
-    return Fraction(-1,-1);
+    int divider = 2;
+    while (divider <= input.numerator && divider <= input.denominator) {
+        if (input.numerator % divider == 0 && input.denominator % divider == 0) {
+            input.numerator /= divider;
+            input.denominator /= divider;
+            continue;
+        }
+        divider++;
+    }
+    return input;
 }
 
 void test();
