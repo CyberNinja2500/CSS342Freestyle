@@ -1,22 +1,32 @@
+#include <cmath>
 #include <iostream>
 
 // TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-bool poweroftwoloop(int n) {
+std::string poweroftwoloop(int n) {
+    if (n <= 1) {return "FAIL!";}
     while (n > 1) {
-
+        if (n % 2 == 0) {n = n / 2;}
+        else {return "FAIL!";}
     }
-    return true;
+    return "PASS!";
 }
 
-bool poweroftwonoloop(int n) {
-    if (n < 2) {return false;}
-    if (n % 2 == 0) {return true;}
-    return true;
+std::string poweroftwonoloop(int n) {
+    std::string result = "FAIL!";
+    if (n > 1 && n % 2 == 0 && n % 3 != 0
+        && n % 5 != 0) {result = "PASS!";}
+    return result;
 }
 
-bool checkprimenum(int n) {
-    return true;
+// made faster with help from GPT using sqrt(n) in the for loop instead of i < n
+std::string checkprimenum(int n) {
+    std::string result = "PASS!";
+    if (n <= 1) {result = "FAIL!";}
+    for (int i = 2; i <= std::sqrt(n) && result == "PASS!"; i++) {
+        if (n % i == 0) {result = "FAIL!";}
+    }
+    return result;
 }
 
 class Fraction {
@@ -53,13 +63,43 @@ Fraction reduce(Fraction input) {
     return input;
 }
 
-void test();
+void poweroftwotest();
+
+void primetest();
+
+void fractiontest();
 
 int main() {
-    test();
+    poweroftwotest();
+    primetest();
+    fractiontest();
 }
 
-void test() {
+void poweroftwotest() {
+    // check of a number is a power of two using both functions
+    int inputs[8] = {2, 3, 10, 16, 24, 25, 256, 320};
+
+    for (int i = 0; i < 8; i++) {
+        std::cout << inputs[i] << " power of 2 w/ loop: "
+        << poweroftwoloop(inputs[i]) << std::endl;
+    }
+
+    for (int i = 0; i < 8; i++) {
+        std::cout << inputs[i] << " power of 2 no loop: "
+        << poweroftwonoloop(inputs[i]) << std::endl;
+    }
+}
+
+void primetest() {
+    // check if a given number is a prime number or not
+    int inputs[14] = {-5, -1, 0, 1, 2, 3, 5, 7, 11, 14, 15, 16, 19, 25};
+
+    for (int i = 0; i < 14; i++) {
+        std::cout << inputs[i] << " prime number: " << checkprimenum(inputs[i]) << std::endl;
+    }
+}
+
+void fractiontest() {
     // reduce given fraction to minimum terms
     // 1/2 -> 1/2
     // 2/4 -> 1/2
